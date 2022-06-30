@@ -56,7 +56,7 @@ function getParts(text: string): CommandStructure|null {
         return null;
     }
 
-    return {'command': command.toLowerCase(), 'arguments': textParts};
+    return {'command': command.toLowerCase(), 'arguments': commandParts};
 }
 
 async function main() {
