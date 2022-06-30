@@ -20,20 +20,27 @@ const commands: Commands = {
 }
 
 function getParts(text: string): CommandStructure|null {
-    console.debug('Breaking text into parts', text);
-    let textParts = text.trim().split(' ');
+    console.log('Fetching command from tweet...');
+    let textParts = text.trim().toLowerCase().split(' ');
     let mentions = 0;
     if (!textParts) {
         return null;
     }
 
-    for (const textPart of textParts) {
+    console.log('Tweet parts: ', textParts);
+
+    let commandParts = [];
+    for (let textPart of textParts) {
+        textPart = textPart.trim();
         if (textPart.startsWith('@')) {
-            // mention..
-            if ('@tedcryptoBot' === textPart) {
+            // mention bot
+            if ('@tedcryptobot' === textPart) {
                 mentions++;
             }
-            textParts.shift(); // Remove mention
+
+            console.log('removing mention', textPart);
+        } else {
+            commandParts.push(textPart);
         }
     }
 
@@ -41,9 +48,9 @@ function getParts(text: string): CommandStructure|null {
         console.log('No mentions found!');
     }
 
-    console.log('Current parts:', textParts);
+    console.log('Command parts:', commandParts);
 
-    let command = textParts.shift();
+    let command = commandParts.shift();
     if (!command) {
         console.error('No command found!');
         return null;
