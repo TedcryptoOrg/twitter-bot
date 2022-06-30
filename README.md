@@ -1,7 +1,15 @@
 # Tedcrypto twitter bot
 
-Right now this only answers APR requests e.g.:
+Tedcrypto twitter bot is a simple bot that works by listening to
+new tweets and to a user mention (currently: @tedcryptoBot)
 
-    `@TedBot <chain>`
+### Commands
 
-We use Tom's CHAIN API to get the APR for a given chain.
+Current commands are as follow:
+
+ - ping: Bot replies with pong
+ - APR: Gets the APR for a given chain, e.g.: `@tedcryptoBot APR evmos`
+
+### Thanks
+
+ - Thanks to Tom (@eco_stake) for the [Cosmos Directory](https://github.com/eco-stake/cosmos-directory)
