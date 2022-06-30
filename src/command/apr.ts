@@ -34,11 +34,13 @@ export class APR implements Command {
             return;
         }
 
-        await tweet.reply({
-            text: "@" + tweet.author?.username
+        const tweetText = "@" + tweet.author?.username
                 + " current APR for " + chain
-                + " is " + APR + "%!",
-        });
+                + " is " + currentAPR + "%!";
+
+        console.log('Tweeting...', tweetText);
+
+        await tweet.reply({text: tweetText});
     }
 }
 
