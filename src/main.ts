@@ -9,30 +9,31 @@ type Commands = {
     [key: string]: Command;
 }
 
-type CommandStructure = {
+export type CommandStructure = {
     command: string,
     arguments: string[],
 }
 
 const commands: Commands = {
     'ping': require('./command/ping').Ping,
+    'apr': require('./command/apr').APR,
 }
 
 function getParts(text: string): CommandStructure|null {
     console.debug('Breaking text into parts', text);
-    let textParts = text.split(' ');
+    let textParts = text.trim().split(' ');
     let mentions = 0;
     if (!textParts) {
         return null;
     }
 
-    for (let index in textParts) {
-        const part = textParts.shift();
-        if (part?.startsWith('@')) {
+    for (const textPart of textParts) {
+        if (textPart.startsWith('@')) {
             // mention..
-            if ('@tedcrypto_' === textParts[index]) {
+            if ('@tedcryptoBot' === textPart) {
                 mentions++;
             }
+            textParts.shift(); // Remove mention
         }
     }
 
@@ -40,13 +41,15 @@ function getParts(text: string): CommandStructure|null {
         console.log('No mentions found!');
     }
 
+    console.log('Current parts:', textParts);
+
     let command = textParts.shift();
     if (!command) {
         console.error('No command found!');
         return null;
     }
 
-    return {'command': command, 'arguments': textParts};
+    return {'command': command.toLowerCase(), 'arguments': textParts};
 }
 
 async function main() {
@@ -65,9 +68,9 @@ async function main() {
         rules.push(rule.value);
     });
 
-    if (!rules.includes('@tedcrypto_')) {
+    if (!rules.includes('@tedcryptoBot')) {
         console.log('Creating rule...');
-        await client.filteredStreamRules.create({ value: '@tedcrypto_' });
+        await client.filteredStreamRules.create({ value: '@tedcryptoBot' });
     } else {
         console.log('Rules already created!');
     }
@@ -83,9 +86,10 @@ async function main() {
             console.log('Command: ' + parts.command, 'Arguments: ' + parts.arguments);
             if (!commands.hasOwnProperty(parts.command)) {
                 console.log('Command not found!', parts.command);
+                return;
             }
 
-            await commands[parts.command]?.run(client, tweet, parts.arguments);
+            await commands[parts.command]?.run(client, tweet, parts);
         } catch (error) {
             console.error(error);
         }
