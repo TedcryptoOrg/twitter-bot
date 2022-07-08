@@ -5,7 +5,7 @@ import {CoinGecko} from "../services/integration/coingecko/coingecko";
 
 const coinGecko = new CoinGecko();
 
-export class APR implements Command {
+export class Price implements Command {
     name: string;
     description: string;
     usage: string;
@@ -45,4 +45,4 @@ export class APR implements Command {
     }
 }
 
-exports.APR = new APR();
+exports.Price = new Price();

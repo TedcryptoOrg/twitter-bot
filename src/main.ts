@@ -17,11 +17,12 @@ export type CommandStructure = {
 const commands: Commands = {
     'ping': require('./command/ping').Ping,
     'apr': require('./command/apr').APR,
+    'price': require('./command/price').PRICE,
 }
 
 function getParts(text: string): CommandStructure|null {
     console.log('Fetching command from tweet...');
-    let textParts = text.trim().toLowerCase().split(' ');
+    let textParts = text.replace(/\s+/g,' ').trim().toLowerCase().split(' ');
     let mentions = 0;
     if (!textParts) {
         return null;
