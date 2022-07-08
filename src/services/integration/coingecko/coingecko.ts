@@ -33,7 +33,6 @@ export class CoinGecko {
                     params
                 })
             );
-            console.debug('Found coin:', data.data);
 
             return data.data;
         } catch (err) {
