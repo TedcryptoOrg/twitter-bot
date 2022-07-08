@@ -20,14 +20,19 @@ export class Price implements Command {
     async run(client: Client, tweet: Tweet, command: CommandStructure) {
         const coinId = command.arguments.shift();
         if (!coinId) {
+            console.debug('No coin id provided');
+
             await tweet.reply({
                 text: "@" + tweet.author?.username + " Please specify a coin id!",
             });
 
             return;
         }
+
+        console.debug('Fetching price for coin id:', coinId);
         const currentPrice = await coinGecko.getPrice(coinId);
         if (!currentPrice) {
+            console.debug('No price found for coin id:', coinId);
             await tweet.reply({
                 text: "@" + tweet.author?.username + " I couldn't find that coin price!",
             });
