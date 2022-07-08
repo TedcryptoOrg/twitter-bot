@@ -17,7 +17,7 @@ export type CommandStructure = {
 const commands: Commands = {
     'ping': require('./command/ping').Ping,
     'apr': require('./command/apr').APR,
-    'price': require('./command/price').PRICE,
+    'price': require('./command/price').Price,
 }
 
 function getParts(text: string): CommandStructure|null {
