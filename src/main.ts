@@ -18,6 +18,7 @@ const commands: Commands = {
     'ping': require('./command/ping').Ping,
     'apr': require('./command/apr').APR,
     'price': require('./command/price').Price,
+    'lotto': require('./command/lotto').Lotto,
 }
 
 function getParts(text: string): CommandStructure|null {
@@ -76,12 +77,15 @@ async function main() {
         rules.push(rule.value);
     });
 
-    if (!rules.includes('@tedcryptoBot')) {
+    if (!rules.includes(process.env['TWITTER_BOT_NAME'])) {
         console.log('Creating rule...');
-        await client.filteredStreamRules.create({ value: '@tedcryptoBot' });
+        await client.filteredStreamRules.create({ value: process.env['TWITTER_BOT_NAME'] ?? '' });
+        console.log('Rule created!')
     } else {
         console.log('Rules already created!');
     }
+
+    console.log('Filtering and listening to new tweets with "' + process.env['TWITTER_BOT_NAME'] + '"');
 
     client.on('filteredTweetCreate', async tweet => {
         try {
