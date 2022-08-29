@@ -1,6 +1,5 @@
-import {Client, Tweet} from 'twitter.js';
 import {Command} from './command';
-import {CommandStructure} from "../main";
+import {CommandStructure} from '../types/commandStructure';
 
 const chainDirectory = require('../cosmos/chain_directory').ChainDirectory;
 
@@ -15,33 +14,16 @@ export class APR implements Command {
         this.usage = 'APR <chain>';
     }
 
-    // @ts-ignore
-    async run(client: Client, tweet: Tweet, command: CommandStructure) {
+    async run(command: CommandStructure): Promise<string> {
         const chain = command.arguments.shift();
         if (!chain) {
-            await tweet.reply({
-                text: "@" + tweet.author?.username + " Please specify a chain!",
-            });
-
-            return;
+            return 'Please specify a chain';
         }
         const currentAPR = await chainDirectory.getAPR(chain);
         if (!currentAPR) {
-            await tweet.reply({
-                text: "@" + tweet.author?.username + " I couldn't find that chain APR!",
-            });
-
-            return;
+            return 'I couldn\'t find that chain';
         }
 
-        const tweetText = "@" + tweet.author?.username
-                + " current APR for " + chain
-                + " is " + currentAPR + "%!";
-
-        console.log('Tweeting...', tweetText);
-
-        await tweet.reply({text: tweetText});
+        return 'Current APR for ' + chain + ' is ' + currentAPR + '%';
     }
 }
-
-exports.APR = new APR();

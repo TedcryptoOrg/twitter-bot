@@ -1,10 +1,9 @@
-import {Client, Tweet} from "twitter.js";
-import {CommandStructure} from "../main";
+import {CommandStructure} from "../types/commandStructure";
 
 export interface Command {
     name: string;
     description?: string;
     usage?: string;
 
-    run(client: Client, tweet: Tweet, command: CommandStructure): Promise<void>;
+    run(command: CommandStructure): Promise<string>;
 }

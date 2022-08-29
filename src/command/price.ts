@@ -1,6 +1,5 @@
-import {Client, Tweet} from 'twitter.js';
 import {Command} from './command';
-import {CommandStructure} from "../main";
+import {CommandStructure} from '../types/commandStructure';
 import {CoinGecko} from "../services/integration/coingecko/coingecko";
 
 const coinGecko = new CoinGecko();
@@ -16,38 +15,18 @@ export class Price implements Command {
         this.usage = 'PRICE <chain|token>';
     }
 
-    // @ts-ignore
-    async run(client: Client, tweet: Tweet, command: CommandStructure) {
+    async run(command: CommandStructure): Promise<string> {
         const coinId = command.arguments.shift();
         if (!coinId) {
-            console.debug('No coin id provided');
-
-            await tweet.reply({
-                text: "@" + tweet.author?.username + " Please specify a coin id!",
-            });
-
-            return;
+            return 'Please specify a coin';
         }
 
         console.debug('Fetching price for coin id:', coinId);
         const currentPrice = await coinGecko.getPrice(coinId);
         if (!currentPrice) {
-            console.debug('No price found for coin id:', coinId);
-            await tweet.reply({
-                text: "@" + tweet.author?.username + " I couldn't find that coin price!",
-            });
-
-            return;
+            return 'I couldn\'t find that coin!';
         }
 
-        const tweetText = "@" + tweet.author?.username
-                + " current price for " + coinId
-                + " is $" + currentPrice + "!";
-
-        console.log('Tweeting...', tweetText);
-
-        await tweet.reply({text: tweetText});
+        return 'Current price for ' + coinId + ' is $' + currentPrice + '!';
     }
 }
-
-exports.Price = new Price();
