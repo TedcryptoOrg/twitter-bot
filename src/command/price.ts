@@ -5,14 +5,22 @@ import {CoinGecko} from "../services/integration/coingecko/coingecko";
 const coinGecko = new CoinGecko();
 
 export class Price implements Command {
-    name: string;
-    description: string;
-    usage: string;
+    public name: string;
+    public description: string;
+    public usage: string;
+    public options?: void | { name: string; description: string; required: boolean; }[];
 
     constructor() {
         this.name = 'PRICE';
         this.description = 'Grab current price for a token';
         this.usage = 'PRICE <chain|token>';
+        this.options = [
+            {
+                name: 'chain_or_token',
+                description: 'The chain or token to grab the price for',
+                required: true,
+            }
+        ];
     }
 
     async run(command: CommandStructure): Promise<string> {
