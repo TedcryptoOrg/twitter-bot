@@ -8,14 +8,22 @@ import dayjs from "dayjs";
 const tedLotto = new TedLotto();
 
 export class Lotto implements Command {
-    name: string;
-    description: string;
-    usage: string;
+    public name: string;
+    public description: string;
+    public usage: string;
+    public options?: void|{name: string, description: string, required: boolean}[];
 
     constructor() {
         this.name = 'LOTTO';
         this.description = 'Grab current stats for a given lotto';
         this.usage = 'LOTTO <chain>';
+        this.options = [
+            {
+                name: 'chain',
+                description: 'The chain to grab the stats for',
+                required: true
+            }
+        ]
     }
 
     async run(command: CommandStructure): Promise<string> {

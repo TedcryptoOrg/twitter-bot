@@ -4,14 +4,20 @@ import {CommandStructure} from '../types/commandStructure';
 const chainDirectory = require('../cosmos/chain_directory').ChainDirectory;
 
 export class APR implements Command {
-    name: string;
-    description: string;
-    usage: string;
+    public name: string;
+    public description: string;
+    public usage: string;
+    public options: void|{name: string, description: string, required: boolean}[];
 
     constructor() {
         this.name = 'APR';
         this.description = 'Grab the latest APR for a chain';
         this.usage = 'APR <chain>';
+        this.options = [{
+            name: 'chain',
+            description: 'The chain to grab the APR for',
+            required: true,
+        }];
     }
 
     async run(command: CommandStructure): Promise<string> {

@@ -1,9 +1,9 @@
 import {Command} from './command';
 
 export class Ping implements Command {
-    name: string;
-    description: string;
-    usage: string;
+    public name: string;
+    public description: string;
+    public usage: string;
 
     constructor() {
         this.name = 'ping';
