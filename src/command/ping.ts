@@ -1,4 +1,3 @@
-import {Client, Tweet} from 'twitter.js';
 import {Command} from './command';
 
 export class Ping implements Command {
@@ -12,12 +11,7 @@ export class Ping implements Command {
         this.usage = 'ping';
     }
 
-    // @ts-ignore
-    async run(client: Client, tweet: Tweet, command) {
-        await tweet.reply({
-            text: "@" + tweet.author?.username + " Pong!",
-        });
+    async run(): Promise<string> {
+        return 'Pong!';
     }
 }
-
-exports.Ping = new Ping();
