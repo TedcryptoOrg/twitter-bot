@@ -1,11 +1,12 @@
-import { Client, Tweet } from 'twitter.js';
-import { clientInterface } from "./clientsInterface";
-import { CommandStructure } from '../types/commandStructure';
-import { Commands } from '../types/commands';
-import { Ping } from '../command/ping';
-import { APR } from '../command/apr';
-import { Price } from '../command/price';
-import { Lotto } from '../command/lotto';
+import {Client, Tweet} from 'twitter.js';
+import {clientInterface} from "./clientsInterface";
+import {CommandStructure} from '../types/commandStructure';
+import {Commands} from '../types/commands';
+import {Ping} from '../command/ping';
+import {APR} from '../command/apr';
+import {Price} from '../command/price';
+import {Lotto} from '../command/lotto';
+import {Platforms} from "../enums/platforms";
 
 export class TwitterClient implements clientInterface {
     private client: Client;
@@ -116,6 +117,10 @@ export class TwitterClient implements clientInterface {
             return null;
         }
     
-        return {'command': command.toLowerCase(), 'arguments': commandParts};
+        return {
+            command: command.toLowerCase(),
+            arguments: commandParts,
+            platform: Platforms.Twitter
+        };
     }
 }

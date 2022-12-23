@@ -6,6 +6,7 @@ import { APR } from '../command/apr';
 import { Price } from '../command/price';
 import { Lotto } from '../command/lotto';
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from "discord.js";
+import { Platforms } from '../enums/platforms';
 
 export class DiscordClient implements clientInterface {
     private client: Client;
@@ -60,7 +61,8 @@ export class DiscordClient implements clientInterface {
             await interaction.reply({content: 'Running command... Please wait.'});
             const commandStructure:CommandStructure = {
                 command: interaction.commandName, 
-                arguments: commandArguments
+                arguments: commandArguments,
+                platform: Platforms.Discord
             };
             try {
                 const result = await command.run(commandStructure);
