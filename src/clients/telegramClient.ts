@@ -28,8 +28,11 @@ export class TelegramClient implements clientInterface {
 
     async start(): Promise<void> {
         this.bot.start((ctx) => {
-            console.log('Telegram bot started');
-            ctx.reply('Welcome')
+            console.log('User '+ctx.from.username+' interacted with bot');
+            ctx.reply('You can now use the bot! Send /help to see all available commands!');
+            ctx.reply('If you want to connect your telegram account with tedlotto, ' +
+                'make sure you have registered your username on your lotto profile and send /connect <cosmos-address>' +
+                ' e.g.: /connect cosmos19231ureirh283bf92374213rx');
         });
         Object.keys(this.commands).forEach(commandName => {
             this.bot.command(commandName, async (ctx) => {
