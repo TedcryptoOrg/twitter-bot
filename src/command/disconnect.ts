@@ -35,7 +35,7 @@ export class Disconnect implements Command {
         }
         const walletAddress = command.arguments[0];
         if (!walletAddress) {
-            return 'Wallet address is required';
+            return 'Wallet address is required. e.g.: /disconnect cosmos193ud4774bxas63brhyasr46xa';
         }
 
         return await tedlotto.disconnect(walletAddress, id.toString(), username)

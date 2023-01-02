@@ -64,8 +64,8 @@ export class TelegramClient implements clientInterface {
                 + 'lotto - Grab lotto stats for this week. e.g.: /lotto evmos \n'
                 + 'apr - Grabs the APR for any cosmos chain. e.g.: /apr juno \n'
                 + 'price - Grabs current token price. e.g.: /price osmosis \n'
-                + 'connect - Connect your telegram user with TedLotto\n'
-                + 'disconnect - Disconnect your telegram user from TedLotto\n'
+                + 'connect - Connect your telegram user with TedLotto. e.g.: /connect cosmos193ud4774bxas63brhyasr46xa\n'
+                + 'disconnect - Disconnect your telegram user from TedLotto. e.g.: /disconnect cosmos193ud4774bxas63brhyasr46xa\n'
             );
         });
 
