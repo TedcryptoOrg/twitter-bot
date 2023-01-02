@@ -77,7 +77,7 @@ export class TedLotto {
                 });
 
             return response.data.success
-                ? 'Wallet ' + response.data.wallet + ' connected!'
+                ? 'Wallet ' + walletAddress + ' disconnected!'
                 : 'Error: ' + response.data.error;
         } catch (err) {
             console.log(err);
