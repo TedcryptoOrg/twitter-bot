@@ -36,10 +36,19 @@ export class TelegramClient implements clientInterface {
         });
         Object.keys(this.commands).forEach(commandName => {
             this.bot.command(commandName, async (ctx) => {
+                const messsageId = ctx.update.message.message_id;
+                // check if message still exists
+                if (!ctx.update.message) {
+                    console.log('Message not found!');
+                    return;
+                }
+
                 console.log('Running command ' + commandName);
                 const command = this.commands[commandName];
                 if (!command) {
                     console.log('Command not found!');
+                    ctx.reply('Command not found!', {reply_to_message_id : messsageId});
+
                     return;
                 }
 
@@ -55,7 +64,6 @@ export class TelegramClient implements clientInterface {
 
                 try {
                     const result = await command.run(commandStructure);
-                    const messsageId = ctx.update.message.message_id;
 
                     ctx.reply(result, {reply_to_message_id : messsageId});
                 } catch (error) {
