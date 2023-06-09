@@ -65,7 +65,7 @@ export class TelegramClient implements clientInterface {
                 try {
                     const result = await command.run(commandStructure);
 
-                    ctx.reply(result, {reply_to_message_id : messsageId});
+                    await ctx.reply(result, {reply_to_message_id : messsageId});
                 } catch (error) {
                     console.error('Error running command ' + commandName + ': ' + error);
 
