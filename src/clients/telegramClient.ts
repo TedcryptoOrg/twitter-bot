@@ -59,7 +59,6 @@ export class TelegramClient implements clientInterface {
 
                     ctx.reply(result, {reply_to_message_id : messsageId});
                 } catch (error) {
-                    ctx.reply('Error running command ' + commandName + ': ' + error);
                     console.error('Error running command ' + commandName + ': ' + error);
 
                     return;
