@@ -53,18 +53,17 @@ export class TelegramClient implements clientInterface {
                     'ctx': ctx
                 };
 
-                let result = null;
                 try {
-                    result = await command.run(commandStructure);
+                    const result = await command.run(commandStructure);
+                    const messsageId = ctx.update.message.message_id;
+
+                    ctx.reply(result, {reply_to_message_id : messsageId});
                 } catch (error) {
                     ctx.reply('Error running command ' + commandName + ': ' + error);
                     console.error('Error running command ' + commandName + ': ' + error);
 
                     return;
                 }
-
-                const messsageId = ctx.update.message.message_id;
-                ctx.reply(result, {reply_to_message_id : messsageId});
             })
         });
         this.bot.command('help', (ctx) => {
